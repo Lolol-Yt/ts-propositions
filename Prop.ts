@@ -1,4 +1,4 @@
-type Sorry<T> = (x:T)
+type Sorry<T> = T
 type False = null
 type True = {}
 type Eq<T> = {left: T, right: T}
