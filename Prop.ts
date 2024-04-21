@@ -3,6 +3,7 @@ namespace Prop {
   export namespace True {
     export const intro: () => True = () => {return {_propType: "True"}}
   }
+  export type False = never
   export namespace False {{}}
   export type And<L,R> = {_propType: "And", left: L, right: R}
   export namespace And {
