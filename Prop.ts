@@ -14,4 +14,5 @@ namespace Prop {
     export function inl<L,R>(left: L): Or<L,R> {return {_propType: "Or.inl", value: left}}
     export function inr<L,R>(right: R): Or<L,R> {return {_propType: "Or.inr", value: right}}
   }
+  export function Not<P>() {return (p: P) => Prop.False}
 }
