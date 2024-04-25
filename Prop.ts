@@ -16,6 +16,14 @@ namespace Prop {
   export namespace Or {
     export function inl<L,R>(left: L): Or<L,R> {return {_propType: "Or.inl", value: left}}
     export function inr<L,R>(right: R): Or<L,R> {return {_propType: "Or.inr", value: right}}
+    export function elim<L,R,C>(orProp: Or<L,R>, onLeft: (p: L) => C, onRight: (p: R) => C)) {
+      switch (orProp._propType) {
+        case "Or.inl":
+          return onLeft(orProp.value)
+        case "Or.inr":
+          return onRight(orProp.value)
+      }
+    }
   }
   
   export type Not<P> = (p: P) => False
