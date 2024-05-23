@@ -8,19 +8,19 @@ namespace Prop {
   export interface False extends Prop {_propType: "False", proof: never}
   export namespace False {{/* Todo: make elim*/}}
   
-  export interface And<L,R> extends Prop = {_propType: "And", left: L, right: R}
+  export interface And<L extends Prop,R extends Prop> extends Prop = {_propType: "And", left: L, right: R}
   export namespace And {
     export function intro<L,R>(left: L, right: R): And<L,R> {return {_propType: "And", left: left, right: right}}
   }
   export namespace Or {
-    export interface inl<L> extends Prop {_propType: "Or.inl", value: L}
-    export interface inr<R> extends Prop {_propType: "Or.inr", value: R}
+    export interface inl<L extends Prop> extends Prop {_propType: "Or.inl", value: L}
+    export interface inr<R extends Prop> extends Prop {_propType: "Or.inr", value: R}
   }
-  export type Or<L,R> = inl<L> | inr<R>
+  export type Or<L extends Prop,R extends Prop> = inl<L> | inr<R>
   export namespace Or {
     export function inl<L,R>(left: L): Or<L,R> {return {_propType: "Or.inl", value: left}}
     export function inr<L,R>(right: R): Or<L,R> {return {_propType: "Or.inr", value: right}}
-    export function elim<L,R,C>(orProp: Or<L,R>, onLeft: (p: L) => C, onRight: (p: R) => C) {
+    export function elim<L,R,C>(orProp: Or<L,R>, onLeft: (p: L) => C, onRight: (p: R) => C): C {
       switch (orProp._propType) {
         case "Or.inl":
           return onLeft(orProp.value)
