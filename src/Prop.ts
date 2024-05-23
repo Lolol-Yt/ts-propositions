@@ -1,18 +1,22 @@
+interface Prop {_propType: string}
 namespace Prop {
-  export type True = {_propType: "True"}
+  export interface True extends Prop {_propType: "True"}
   export namespace True {
     export const intro: () => True = () => {return {_propType: "True"}}
   }
   
-  export type False = never
+  export interface False extends Prop {_propType: "False", proof: never}
   export namespace False {{/* Todo: make elim*/}}
   
-  export type And<L,R> = {_propType: "And", left: L, right: R}
+  export interface And<L,R> extends Prop = {_propType: "And", left: L, right: R}
   export namespace And {
     export function intro<L,R>(left: L, right: R): And<L,R> {return {_propType: "And", left: left, right: right}}
   }
-  
-  export type Or<L,R> = {_propType: "Or.inl", value: L} | {_propType: "Or.inr", value: R}
+  export namespace Or {
+    export interface inl<L> extends Prop {_propType: "Or.inl", value: L}
+    export interface inr<R> extends Prop {_propType: "Or.inr", value: R}
+  }
+  export type Or<L,R> = inl<L> | inr<R>
   export namespace Or {
     export function inl<L,R>(left: L): Or<L,R> {return {_propType: "Or.inl", value: left}}
     export function inr<L,R>(right: R): Or<L,R> {return {_propType: "Or.inr", value: right}}
