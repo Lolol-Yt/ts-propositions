@@ -10,13 +10,13 @@ namespace Prop {
   
   export interface And<L extends Prop,R extends Prop> extends Prop {_propType: "And", left: L, right: R}
   export namespace And {
-    export function intro<L,R>(left: L, right: R): And<L,R> {return {_propType: "And", left: left, right: right}}
+    export function intro<L extends Prop,R extends Prop>(left: L, right: R): And<L,R> {return {_propType: "And", left: left, right: right}}
   }
   export namespace Or {
     export interface inl<L extends Prop> extends Prop {_propType: "Or.inl", value: L}
     export interface inr<R extends Prop> extends Prop {_propType: "Or.inr", value: R}
   }
-  export type Or<L extends Prop,R extends Prop> = inl<L> | inr<R>
+  export type Or<L extends Prop,R extends Prop> = Or.inl<L> | Or.inr<R>
   export namespace Or {
     export function inl<L extends Prop,R extends Prop>(left: L): Or<L,R> {return {_propType: "Or.inl", value: left}}
     export function inr<L extends Prop,R extends Prop>(right: R): Or<L,R> {return {_propType: "Or.inr", value: right}}
@@ -32,7 +32,7 @@ namespace Prop {
   
   export type Not<P extends Prop> = (p: P) => False
   export namespace Not {
-    export function contradiction<P>(p: P, np: Not<P>): False {return np(p)}
+    export function contradiction<P extends Prop>(p: P, np: Not<P>): False {return np(p)}
   }
   
   export type Eq<T,A extends T,B extends A> = A extends B ? {_propType: "Eq", left: A, right: B} : never
