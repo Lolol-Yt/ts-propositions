@@ -18,9 +18,9 @@ namespace Prop {
   }
   export type Or<L extends Prop,R extends Prop> = inl<L> | inr<R>
   export namespace Or {
-    export function inl<L,R>(left: L): Or<L,R> {return {_propType: "Or.inl", value: left}}
-    export function inr<L,R>(right: R): Or<L,R> {return {_propType: "Or.inr", value: right}}
-    export function elim<L,R,C>(orProp: Or<L,R>, onLeft: (p: L) => C, onRight: (p: R) => C): C {
+    export function inl<L extends Prop,R extends Prop>(left: L): Or<L,R> {return {_propType: "Or.inl", value: left}}
+    export function inr<L extends Prop,R extends Prop>(right: R): Or<L,R> {return {_propType: "Or.inr", value: right}}
+    export function elim<L extends Prop,R extends Prop,C extends Prop>(orProp: Or<L,R>, onLeft: (p: L) => C, onRight: (p: R) => C): C {
       switch (orProp._propType) {
         case "Or.inl":
           return onLeft(orProp.value)
