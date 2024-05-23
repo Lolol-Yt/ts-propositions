@@ -30,7 +30,7 @@ namespace Prop {
     }
   }
   
-  export type Not<P> = (p: P) => False
+  export type Not<P extends Prop> = (p: P) => False
   export namespace Not {
     export function contradiction<P>(p: P, np: Not<P>): False {return np(p)}
   }
