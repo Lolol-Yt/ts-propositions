@@ -31,5 +31,8 @@ namespace Prop {
     export function contradiction<P>(p: P, np: Not<P>): False {return np(p)}
   }
   
-  export type Eq<T> = (x: T) => {_propType: "Eq", left: x, right: x}
+  export type Eq<T,A extends T,B extends A> = A extends B ? {_propType: "Eq", left: A, right: B} : never
+  export namespace Eq {
+    export function rfl<T,A extends T>(a: A): Eq<T,A,A> {return {_propType: "Eq", left: a, right: a} as Eq<T,A,A>}
+  }
 }
