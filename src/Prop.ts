@@ -8,7 +8,7 @@ namespace Prop {
   export interface False extends Prop {_propType: "False", proof: never}
   export namespace False {{/* Todo: make elim*/}}
   
-  export interface And<L extends Prop,R extends Prop> extends Prop = {_propType: "And", left: L, right: R}
+  export interface And<L extends Prop,R extends Prop> extends Prop {_propType: "And", left: L, right: R}
   export namespace And {
     export function intro<L,R>(left: L, right: R): And<L,R> {return {_propType: "And", left: left, right: right}}
   }
